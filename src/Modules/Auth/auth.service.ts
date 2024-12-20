@@ -17,10 +17,10 @@ const loginUser=async(payload:TLoginUser)=>{
     const user=await User.findOne({email})
         console.log(user);
 
-    if(!User.isUserExistsByCustomEmail(email)){
+    if(!await User.isUserExistsByCustomEmail(email)){
         throw new appError(StatusCodes.NOT_FOUND,'This user dose not exist !!')
     }
-     if(!User.isPasswordMatched(password,user?.password as string)){
+     if(! await User.isPasswordMatched(password,user?.password as string)){
         throw new appError(StatusCodes.NOT_FOUND,'This password dose not matched !!')
     }
 

@@ -10,12 +10,11 @@ import { User } from "../Modules/User/user.model";
 
 const auth=(...requiredRole:TUserRole[])=>{
     return catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
-     const token=req.headers.authorization
+     const token=req.headers.authorization?.split(' ').at(1)
 
      if(!token){
         throw new appError(StatusCodes.FORBIDDEN,'You are unauthorized')
      }
-
 
      //decoded token
      const decoded=jwt.verify(token,config.jwt_access_secret as string) as JwtPayload

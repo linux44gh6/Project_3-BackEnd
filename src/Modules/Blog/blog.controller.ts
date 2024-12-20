@@ -26,6 +26,18 @@ const createBlog=catchAsync(async(req,res)=>{
     }))
 })
 
+const updateBlog=catchAsync(async(req,res)=>{
+  const {userEmail}=req.user as JwtPayload
+  const {id}=req.params
+  const result=await BlogServices.updatedBlog(userEmail,id,req.body)
+  sendResponse(res,({
+    success:true,
+    StatusCode:StatusCodes.OK,
+    message:"Blog updated success",
+    data:result
+}))
+})
 export const BlogController={
-    createBlog
+    createBlog,
+    updateBlog
 }
