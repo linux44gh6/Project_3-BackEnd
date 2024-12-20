@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FilterQuery, Query } from "mongoose";
+import { FilterQuery, Query} from "mongoose";
 
 export class QueryBuilder<T>{
     public modelQuery:Query<T[],T>
@@ -9,18 +9,16 @@ export class QueryBuilder<T>{
         this.query=query
     }
 
-    search(searchAbleFields: string[]) {
-        const search = this?.query?.search as string;
-        if (search) {
-          this.modelQuery = this.modelQuery.find({
-            $or: searchAbleFields.map(field => ({
-              [field]: { $regex: search, $options: 'i' },
-            })),
-          } as FilterQuery<any>);
-        }
-        return this;
+    search(searchableFields: string[]) {
+      const searchTerm = this?.query?.search
+      if (searchTerm) {
+        const orCondition = searchableFields.map((field) => ({
+          [field]: { $regex: searchTerm, $options: 'i' },
+        }));
+        this.modelQuery = this.modelQuery.find({ $or: orCondition });
       }
-
+      return this;
+    }
         sort() {
             const sort =
               (this?.query?.sort as string)?.split(',')?.join(' ') || '-createdAt';
@@ -30,12 +28,16 @@ export class QueryBuilder<T>{
 
           filter() {
             const queryObj = { ...this.query }; // copy
-        
+         console.log(queryObj);
             // Filtering
-            const excludeFields = ['searchTerm', 'sort',];
+            const excludeFields = ['search','sortBy','sortOrder'];
         
             excludeFields.forEach((el) => delete queryObj[el]);
-        
+
+            if (queryObj.filter) {
+              queryObj.author = queryObj.filter; 
+              delete queryObj.filter;
+            }
             this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
         
             return this;

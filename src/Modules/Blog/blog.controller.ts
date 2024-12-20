@@ -37,7 +37,32 @@ const updateBlog=catchAsync(async(req,res)=>{
     data:result
 }))
 })
+
+const deleteBlog=catchAsync(async(req,res)=>{
+  const {userEmail}=req.user as JwtPayload
+  const {id}=req.params
+ await BlogServices.deleteBlog(userEmail,id)
+  sendResponse(res,({
+    success:true,
+    StatusCode:StatusCodes.OK,
+    message:"Blog deleted success",
+    data:null
+}))
+})
+
+const getAllBlog=catchAsync(async(req,res)=>{
+  const result=await BlogServices.getAllBlog(req.query)
+  console.log(result);
+  sendResponse(res,({
+    success:true,
+    StatusCode:StatusCodes.OK,
+    message:"Blog retrive success",
+    data:result
+}))
+})
 export const BlogController={
     createBlog,
-    updateBlog
+    updateBlog,
+    deleteBlog,
+    getAllBlog
 }

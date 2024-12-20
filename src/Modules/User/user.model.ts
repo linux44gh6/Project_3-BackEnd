@@ -36,7 +36,6 @@ userSchema.pre('save',async function(next){
     const user=this
     user.password=await bcrypt.hash(user.password,
         Number(config.bcrypt_salt_round))
-        console.log(user.password);
         next()
 })
 
@@ -47,4 +46,5 @@ userSchema.statics.isUserExistsByCustomEmail=async function(email){
 userSchema.statics.isPasswordMatched=async function(plainTextPass,hashedPass){
   return await bcrypt.compare(plainTextPass,hashedPass)
 }
+
 export const User = model<TUser,UserModel>('User', userSchema);
