@@ -11,16 +11,16 @@ import { User } from "../Modules/User/user.model";
 const auth=(...requiredRole:TUserRole[])=>{
     return catchAsync(async(req:Request,res:Response,next:NextFunction)=>{
      const token=req.headers.authorization
-     console.log("1st check",token);
+
      if(!token){
         throw new appError(StatusCodes.FORBIDDEN,'You are unauthorized')
      }
-     console.log(requiredRole);
+
 
      //decoded token
      const decoded=jwt.verify(token,config.jwt_access_secret as string) as JwtPayload
-     const {role,userEmail}=decoded
-     console.log(decoded);
+     const {userRole,userEmail}=decoded
+   
      //check the user is exist or not
      const user=await User.isUserExistsByCustomEmail(userEmail)
      if(!user){
@@ -32,7 +32,7 @@ const auth=(...requiredRole:TUserRole[])=>{
 
     //  console.log("2nd check",!requiredRole.includes(role));
 
-     if(requiredRole && requiredRole.includes(role)){
+     if(requiredRole && !requiredRole.includes(userRole)){
         throw new appError(StatusCodes.FORBIDDEN,'You are unauthorized')
      }
      req.user=decoded as JwtPayload

@@ -4,6 +4,6 @@ import auth from "../../Middlewares/auth";
 import { USER_ROLE } from "../User/user.constants";
 
 const router=Router()
-router.post('/',auth(USER_ROLE.admin),BlogController.createBlog)
+router.post('/',auth(USER_ROLE.user),BlogController.createBlog)
 
 export const BlogRouter=router

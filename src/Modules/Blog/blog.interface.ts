@@ -1,9 +1,9 @@
-// import { Types } from 'mongoose';
+import { Types } from 'mongoose';
 
 export type TBlogPost = {
   title: string;
   content: string;
-  author: string
+  author: Types.ObjectId
   isPublished: boolean;
   createdAt: Date;
   updatedAt: Date;
