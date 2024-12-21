@@ -1,14 +1,20 @@
-// import { StatusCodes } from "http-status-codes";
-// import { appError } from "../../App/Errors/AppError";
+
 import { Blog } from '../Blog/blog.model';
 import { User } from '../User/user.model';
 
 const blockUser = async (id: string) => {
-  // console.log(id);
-  // const user=await User.findById({_id:id})
-  // if(user?.isBlocked===true){
-  //     throw new appError(StatusCodes.CONFLICT,'This user already blocked')
-  // }
+  // console.log('Checking if user is already blocked...');
+
+  // const user = await User.findById(id);
+  // // if (!user) {
+  // //   throw new appError(StatusCodes.NOT_FOUND, 'User not found');
+  // // }
+
+  // // if (user.isBlocked) {
+  // //   console.error('User is already blocked:', user);
+  // //   throw new appError(StatusCodes.FORBIDDEN, 'This user is already blocked');
+  // // }
+
   const result = await User.findOneAndUpdate(
     { _id: id },
     { isBlocked: true },
@@ -16,6 +22,7 @@ const blockUser = async (id: string) => {
   );
   return result;
 };
+
 const deleteBlog = async (id: string) => {
   const result = await Blog.findByIdAndDelete({ _id: id });
   return result;

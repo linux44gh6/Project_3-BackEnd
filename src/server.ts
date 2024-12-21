@@ -24,7 +24,7 @@ main();
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (reason) => {
-  console.error(`😡 Unhandled Rejection: ${reason}`);
+  console.error(`😡 Unhandled Rejection: ${reason}`); 
   if (server) {
     server.close(() => {
       console.log('Server closed due to unhandled rejection.');
