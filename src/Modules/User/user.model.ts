@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { model, Schema } from 'mongoose';
 import { TUser, UserModel } from './user.interface';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 import config from '../../App/config';
 
-const userSchema = new Schema<TUser,UserModel>(
+const userSchema = new Schema<TUser, UserModel>(
   {
     name: {
       type: String,
@@ -17,12 +17,12 @@ const userSchema = new Schema<TUser,UserModel>(
     },
     password: {
       type: String,
-      select:0
+      select: 0,
     },
     role: {
       type: String,
       enum: ['admin', 'user'],
-      default:'user'
+      default: 'user',
     },
     isBlocked: {
       type: Boolean,
@@ -32,19 +32,24 @@ const userSchema = new Schema<TUser,UserModel>(
   { timestamps: true }
 );
 
-userSchema.pre('save',async function(next){
-    const user=this
-    user.password=await bcrypt.hash(user.password,
-        Number(config.bcrypt_salt_round))
-        next()
-})
+userSchema.pre('save', async function (next) {
+  const user = this;
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_round)
+  );
+  next();
+});
 
-userSchema.statics.isUserExistsByCustomEmail=async function(email){
- return await User.findOne({email})
-}
+userSchema.statics.isUserExistsByCustomEmail = async function (email) {
+  return await User.findOne({ email });
+};
 
-userSchema.statics.isPasswordMatched=async function(plainTextPass,hashedPass){
-  return await bcrypt.compare(plainTextPass,hashedPass)
-}
+userSchema.statics.isPasswordMatched = async function (
+  plainTextPass,
+  hashedPass
+) {
+  return await bcrypt.compare(plainTextPass, hashedPass);
+};
 
-export const User = model<TUser,UserModel>('User', userSchema);
+export const User = model<TUser, UserModel>('User', userSchema);

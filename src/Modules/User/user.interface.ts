@@ -1,6 +1,5 @@
-
-import { Model } from "mongoose";
-import { USER_ROLE } from "./user.constants";
+import { Model } from 'mongoose';
+import { USER_ROLE } from './user.constants';
 
 export type TUser = {
   name: string;
@@ -13,15 +12,14 @@ export type TUser = {
 };
 
 export interface UserModel extends Model<TUser> {
-    //instance methods for checking if the user exist
-    isUserExistsByCustomEmail(id: string): Promise<TUser>;
+  //instance methods for checking if the user exist
+  isUserExistsByCustomEmail(id: string): Promise<TUser>;
 
-    //instance methods for checking if passwords are matched
-    isPasswordMatched(
-      plainTextPass: string,
-      hashedPass: string,
-    ): Promise<boolean>;
+  //instance methods for checking if passwords are matched
+  isPasswordMatched(
+    plainTextPass: string,
+    hashedPass: string
+  ): Promise<boolean>;
+}
 
-  }
-
-  export type TUserRole=keyof typeof USER_ROLE
+export type TUserRole = keyof typeof USER_ROLE;

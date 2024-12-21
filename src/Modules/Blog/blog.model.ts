@@ -12,7 +12,7 @@ const BlogPostSchema = new Schema<TBlogPost>(
       required: true,
     },
     author: {
-      type:Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
     },
     isPublished: {
@@ -25,4 +25,4 @@ const BlogPostSchema = new Schema<TBlogPost>(
   }
 );
 
-export const Blog=model<TBlogPost>('Blog',BlogPostSchema)
+export const Blog = model<TBlogPost>('Blog', BlogPostSchema);

@@ -1,1 +1,1 @@
-export const searchAbleFields=['title','content']
+export const searchAbleFields = ['title', 'content'];
