@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { BlogRouter } from '../Modules/Blog/blog.route';
+import { BlogRouter } from '../Modules/Products/product.route';
 import { authRouter } from '../Modules/Auth/auth.route';
 import { adminRoute } from '../Modules/Admin/admin.route';
 
 const router = Router();
 const moduleRoutes = [
   {
-    path: '/blogs',
+    path: '/products',
     route: BlogRouter,
   },
   {

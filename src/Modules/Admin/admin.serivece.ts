@@ -1,5 +1,5 @@
 
-import { Blog } from '../Blog/blog.model';
+import { Blog } from '../Products/product.model';
 import { User } from '../User/user.model';
 
 const blockUser = async (id: string) => {

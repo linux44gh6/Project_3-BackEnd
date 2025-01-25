@@ -11,9 +11,8 @@ const userValidationSchema = z.object({
     password: z.string({
       required_error: 'Password is required',
     }),
-    role: z.enum(['admin', 'user'], {}).optional(),
-    isBlocked: z.boolean().optional(),
-  }),
+   
+  } ),
 });
 
 export const userValidation = {
