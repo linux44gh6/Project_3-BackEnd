@@ -10,7 +10,7 @@ router.get('/', BlogController.getAllBlog);
 router.post(
   '/',
   auth(USER_ROLE.user),
-  // validateRequest(blogValidation.BlogPostValidationSchema),
+  validateRequest(blogValidation.BlogPostValidationSchema),
   BlogController.createBlog
 );
 
