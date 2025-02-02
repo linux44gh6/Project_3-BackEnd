@@ -9,7 +9,7 @@ const router = Router();
 router.get('/', BlogController.getAllBlog);
 router.post(
   '/',
-  auth(USER_ROLE.user),
+  // auth(USER_ROLE.user),
   validateRequest(blogValidation.BlogPostValidationSchema),
   BlogController.createBlog
 );
@@ -22,4 +22,9 @@ router.post(
 // );
 
 router.delete('/:id', auth(USER_ROLE.user), BlogController.deleteBlog);
+
+router.get('/:id',
+  //  auth(USER_ROLE.user), 
+   BlogController.getSingleProduct);
+   
 export const BlogRouter = router;

@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { TProduct } from './product.interface';
-import { number } from 'zod';
+
 
 const ProductPostSchema = new Schema<TProduct>(
   {
@@ -16,6 +16,9 @@ const ProductPostSchema = new Schema<TProduct>(
       type: String,
     },
     rating: {
+      type: Number,
+    },
+    price: {
       type: Number,
     },
     isPublished: {

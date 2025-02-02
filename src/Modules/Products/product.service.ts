@@ -1,13 +1,13 @@
-import { Types } from 'mongoose';
+
 import { Blog } from './product.model';
-import { User } from '../User/user.model';
+
 import { appError } from '../../App/Errors/AppError';
 import { StatusCodes } from 'http-status-codes';
 import { QueryBuilder } from '../../builders/QueryBuilder';
 import { searchAbleFields } from './product.constant';
 import { TProduct } from './product.interface';
 
-const createBlog = async (authorId: Types.ObjectId, payload: TProduct) => {
+const createBlog = async (payload: TProduct) => {
   const blogData = {
     ...payload,
   };
@@ -69,7 +69,7 @@ const getAllBlog = async (query: Record<string, unknown>) => {
     throw new Error('Invalid query parameter');
   }
 
-  const blogQuery = new QueryBuilder(Blog.find().populate('author'), query)
+  const blogQuery = new QueryBuilder(Blog.find(), query)
     .search(searchAbleFields)
     .sort()
     .filter();
@@ -77,9 +77,14 @@ const getAllBlog = async (query: Record<string, unknown>) => {
   const result = await blogQuery.modelQuery;
   return result;
 };
+const getSingleBlog = async (id: string) => {
+  const result=await Blog.findById(id)
+  return result
+}
 export const BlogServices = {
   createBlog,
   // updatedBlog,
   deleteBlog,
   getAllBlog,
+  getSingleBlog
 };
