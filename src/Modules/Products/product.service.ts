@@ -1,5 +1,5 @@
 
-import { Blog } from './product.model';
+import { Products } from './product.model';
 
 import { appError } from '../../App/Errors/AppError';
 import { StatusCodes } from 'http-status-codes';
@@ -11,7 +11,7 @@ const createBlog = async (payload: TProduct) => {
   const blogData = {
     ...payload,
   };
-  const result = await Blog.create(blogData);
+  const result = await Products.create(blogData);
   return result;
 };
 
@@ -43,7 +43,7 @@ const createBlog = async (payload: TProduct) => {
 
 const deleteBlog = async (userEmail: string, id: string) => {
   //find the user using id
-  const blog = await Blog.findById(id);
+  const blog = await Products.findById(id);
   if (!blog) {
     throw new appError(StatusCodes.FORBIDDEN, 'Blog Not found !!😂😂😂');
   }
@@ -57,7 +57,7 @@ const deleteBlog = async (userEmail: string, id: string) => {
   //     'You are not able to update this blog'
   //   );
   // }
-  const result = await Blog.findByIdAndDelete(id, {
+  const result = await Products.findByIdAndDelete(id, {
     new: true,
     runValidators: true,
   });
@@ -69,7 +69,7 @@ const getAllBlog = async (query: Record<string, unknown>) => {
     throw new Error('Invalid query parameter');
   }
 
-  const blogQuery = new QueryBuilder(Blog.find(), query)
+  const blogQuery = new QueryBuilder(Products.find(), query)
     .search(searchAbleFields)
     .sort()
     .filter();
@@ -78,7 +78,7 @@ const getAllBlog = async (query: Record<string, unknown>) => {
   return result;
 };
 const getSingleBlog = async (id: string) => {
-  const result=await Blog.findById(id)
+  const result=await Products.findById(id)
   return result
 }
 export const BlogServices = {

@@ -22,6 +22,16 @@ const createOrder=catchAsync( async(req,res)=>{
       });
 })
 
+const getALlOrder=catchAsync(async(req,res)=>{
+    const result=await orderService.getALlOrder()
+    sendResponse(res, {
+        success: true,
+        StatusCode: StatusCodes.OK,
+        message: 'Blog created success',
+        data: result,
+      });
+})
 export const orderController={
-    createOrder
+    createOrder,
+    getALlOrder
 }

@@ -5,5 +5,6 @@ import { USER_ROLE } from "../User/user.constants";
 
 const router=Router()
 router.post('/create-order',auth(USER_ROLE.user),orderController.createOrder)
+router.get('/',auth(USER_ROLE.user),orderController.getALlOrder)
 
 export const orderRoute=router

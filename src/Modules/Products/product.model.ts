@@ -31,4 +31,4 @@ const ProductPostSchema = new Schema<TProduct>(
   }
 );
 
-export const Blog = model<TProduct>('Products', ProductPostSchema);
+export const Products = model<TProduct>('Products', ProductPostSchema);
