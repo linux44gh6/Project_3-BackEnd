@@ -22,8 +22,18 @@ const getAllUsersOrder=async()=>{
     .populate('products.productId')
 return result
 }
+
+const updateOrder = async (id, payload) => {
+    const result = await Order.findByIdAndUpdate(id, payload, {
+        new: true,
+        runValidators: true
+    });
+    return result;
+};
+
 export  const orderService={
     createOrder,
     getALlOrder,
-    getAllUsersOrder
+    getAllUsersOrder,
+    updateOrder
 }

@@ -37,12 +37,24 @@ const getAllUserOrder=catchAsync(async(req,res)=>{
     sendResponse(res, {
         success: true,
         StatusCode: StatusCodes.OK,
-        message: 'Blog created success',
+        message: 'Product created success',
+        data: result,
+      });
+})
+const updateOrder=catchAsync(async(req,res)=>{
+    const {id}=req.params
+    const data=req.body
+    const result=await orderService.updateOrder(id,data)
+    sendResponse(res, {
+        success: true,
+        StatusCode: StatusCodes.OK,
+        message: 'Product Updated success',
         data: result,
       });
 })
 export const orderController={
     createOrder,
     getALlOrder,
-    getAllUserOrder
+    getAllUserOrder,
+    updateOrder
 }
