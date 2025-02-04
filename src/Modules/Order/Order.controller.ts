@@ -23,7 +23,17 @@ const createOrder=catchAsync( async(req,res)=>{
 })
 
 const getALlOrder=catchAsync(async(req,res)=>{
-    const result=await orderService.getALlOrder()
+    const email=req.params
+    const result=await orderService.getALlOrder(email)
+    sendResponse(res, {
+        success: true,
+        StatusCode: StatusCodes.OK,
+        message: 'Blog created success',
+        data: result,
+      });
+})
+const getAllUserOrder=catchAsync(async(req,res)=>{
+    const result=await orderService.getAllUsersOrder()
     sendResponse(res, {
         success: true,
         StatusCode: StatusCodes.OK,
@@ -33,5 +43,6 @@ const getALlOrder=catchAsync(async(req,res)=>{
 })
 export const orderController={
     createOrder,
-    getALlOrder
+    getALlOrder,
+    getAllUserOrder
 }

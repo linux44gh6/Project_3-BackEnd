@@ -3,6 +3,8 @@ import { BlogRouter } from '../Modules/Products/product.route';
 import { authRouter } from '../Modules/Auth/auth.route';
 import { adminRoute } from '../Modules/Admin/admin.route';
 import { orderRoute } from '../Modules/Order/Order.route';
+import { userRoute } from '../Modules/User/user.route';
+import { stripePaymentRouter } from '../Modules/Payment/PaymentRoute';
 
 const router = Router();
 const moduleRoutes = [
@@ -19,8 +21,16 @@ const moduleRoutes = [
     route: authRouter,
   },
   {
+    path: '/users',
+    route: userRoute,
+  },
+  {
     path: '/admin',
     route: adminRoute,
+  },
+  {
+    path: '/payment',
+    route: stripePaymentRouter,
   },
 ];
 

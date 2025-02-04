@@ -10,7 +10,13 @@ const createOrder= async(payload:TOrder,userId:string,userEmail:string)=>{
     const result=await Order.create(newData)
     return result
 }
-const getALlOrder=async()=>{
+const getALlOrder=async({email})=>{
+    const result= await Order.find({userEmail:email})
+    .populate('userId')
+    .populate('products.productId')
+return result
+}
+const getAllUsersOrder=async()=>{
     const result= await Order.find()
     .populate('userId')
     .populate('products.productId')
@@ -18,5 +24,6 @@ return result
 }
 export  const orderService={
     createOrder,
-    getALlOrder
+    getALlOrder,
+    getAllUsersOrder
 }

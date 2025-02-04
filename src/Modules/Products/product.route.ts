@@ -21,7 +21,7 @@ router.post(
 //   BlogController.updateBlog
 // );
 
-router.delete('/:id', auth(USER_ROLE.user), BlogController.deleteBlog);
+router.delete('/:id', auth(USER_ROLE.admin), BlogController.deleteBlog);
 
 router.get('/:id',
   //  auth(USER_ROLE.user), 
