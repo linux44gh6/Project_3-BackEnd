@@ -8,7 +8,7 @@ const app: Application = express();
 
 //using middleware
 app.use(express.json());
-app.use(cors({origin:"http://localhost:5174", credentials:true}));
+app.use(cors({origin:"http://localhost:5173", credentials:true}));
 //using router
 app.use('/api', router);
 app.get('/', (req: Request, res: Response) => {
