@@ -6,12 +6,18 @@ import { User } from "../User/user.model";
 import { appError } from "../../App/Errors/AppError";
 
 const createOrder=catchAsync( async(req,res)=>{
-    const {userEmail}=req.user
-    const user=await User.findOne({email:userEmail})
-    if(!user){
-       new appError(StatusCodes.UNAUTHORIZED,'You are unAuthorized')
+    let userEmail: string | undefined;
+    if (req.user && typeof req.user === 'object' && 'userEmail' in req.user) {
+      userEmail = (req.user as { userEmail: string }).userEmail;
     }
-    const userId=user?._id
+    if (!userEmail) {
+      throw new appError(StatusCodes.UNAUTHORIZED, 'You are unAuthorized');
+    }
+    const user = await User.findOne({ email: userEmail });
+    if (!user) {
+      throw new appError(StatusCodes.UNAUTHORIZED, 'You are unAuthorized');
+    }
+    const userId=user?._id 
     const data=req.body
     const result=await orderService.createOrder(data,userId,userEmail)
     sendResponse(res, {
@@ -22,9 +28,9 @@ const createOrder=catchAsync( async(req,res)=>{
       });
 })
 
-const getALlOrder=catchAsync(async(req,res)=>{
-    const email=req.params
-    const result=await orderService.getALlOrder(email)
+const getAllOrder=catchAsync(async(req,res)=>{
+    const { email } = req.params;
+    const result=await orderService.getAllOrder({ email });
     sendResponse(res, {
         success: true,
         StatusCode: StatusCodes.OK,
@@ -54,7 +60,7 @@ const updateOrder=catchAsync(async(req,res)=>{
 })
 export const orderController={
     createOrder,
-    getALlOrder,
+    getAllOrder,
     getAllUserOrder,
     updateOrder
 }

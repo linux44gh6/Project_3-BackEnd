@@ -1,6 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 import { TOrder } from "./Order.interface";
 const OrderSchema = new Schema<TOrder>({
+  orderId:{
+    type:Number,
+  },
   userId: { type:Schema.Types.ObjectId, ref: "User", required: true },
   userEmail:{
     type:String,

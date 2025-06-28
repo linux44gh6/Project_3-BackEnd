@@ -1,19 +1,30 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { StatusCodes } from "http-status-codes";
+import { appError } from "../../App/Errors/AppError";
+import { generateOrderId } from "./Order.connstans";
 import { TOrder } from "./Order.interface";
 import Order from "./Order.model";
 
-const createOrder= async(payload:TOrder,userId:string,userEmail:string)=>{
+const createOrder= async(payload:TOrder,userId:any,userEmail:string)=>{
+    const orderId=generateOrderId()
+   console.log(payload);
+    if(!payload?.products){
+        throw new appError(StatusCodes.BAD_REQUEST,'please Select products')
+    }
     const newData={
         ...payload,
         userId,
-        userEmail
+        userEmail,
+        orderId
     }
     const result=await Order.create(newData)
     return result
 }
-const getALlOrder=async({email})=>{
+const getAllOrder=async({email}:{email:string})=>{
     const result= await Order.find({userEmail:email})
     .populate('userId')
     .populate('products.productId')
+    
 return result
 }
 const getAllUsersOrder=async()=>{
@@ -23,7 +34,7 @@ const getAllUsersOrder=async()=>{
 return result
 }
 
-const updateOrder = async (id, payload) => {
+const updateOrder = async (id:string, payload:any) => {
     const result = await Order.findByIdAndUpdate(id, payload, {
         new: true,
         runValidators: true
@@ -33,7 +44,7 @@ const updateOrder = async (id, payload) => {
 
 export  const orderService={
     createOrder,
-    getALlOrder,
+    getAllOrder,
     getAllUsersOrder,
     updateOrder
 }

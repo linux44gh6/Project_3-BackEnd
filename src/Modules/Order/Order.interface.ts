@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 
 export type TOrder = {
+  orderId?:number
   userId:Types.ObjectId; 
   userEmail:string
   products: {
